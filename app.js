@@ -99,11 +99,15 @@ app.post('/location/add', (req, res) => {
 app.post('/friends/connect', (req, res) => {
   const name1 = req.body.name1;
   const name2 = req.body.name2;
+  const id = req.body.id;
   session
     .run('MATCH (a:Person {name: {nameParam1} }), (b:Person {name: {nameParam2} }) MERGE (a)-[:FRIENDS]->(b) RETURN a,b', {nameParam1: name1, nameParam2: name2})
     .then(result => {
-      console.log("connect result", result)
-      res.redirect('/')
+      if(id && id != null) {
+        res.redirect('/person/'+id)
+      }else {
+        res.redirect('/')
+      }     
       session.close();
     })
     .catch(err => {
@@ -117,11 +121,16 @@ app.post('/person/born/add', (req, res) => {
   const state = req.body.state;
   const city = req.body.city;
   const year = req.body.year;
+  const id = req.body.id;
   session
     .run('MATCH (p: Person{name: {nameParam} }), (l:Location {City: {cityParam}, State: {stateParam} }) MERGE (p)-[:BORN_IN { year: {yearParam} }]->(l) RETURN p,l', { nameParam: name, cityParam: city, stateParam: state, yearParam: year })
     .then(result => {
       console.log("person born result", result)
-      res.redirect('/')
+      if(id && id != null) {
+        res.redirect('/person/'+id)
+      }else {
+        res.redirect('/')
+      }  
       session.close()
     })
     .catch(err => {
@@ -178,7 +187,7 @@ app.get('/person/:id', (req, res) => {
 
 const port = process.env.PORT || 3000;
 
-app.listen(3000, function() {
+app.listen(port, function() {
   console.log(`Server started at port ${port}`)
 });
 

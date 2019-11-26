@@ -1,46 +1,88 @@
-<h3>Add new Person</h3>
-<form method="post" action="/person/add">
-  <input type="text" name="name" placeholder="Name">
-  <input type="submit" value="Submit">
-</form>
+<% include ../views/partials/header %>
 
-<h3>Add new Location</h3>
-<form method="post" action="/location/add">
-  <input type="text" name="city" placeholder="City">
-  <input type="text" name="state" placeholder="State">
-  <input type="submit" value="Submit">
-</form>
+  
+  <a class="btn btn-primary" role="button" data-toggle="collapse" href="#addNewPerson" aria-expanded="false" aria-controls="addNewPerson">
+    Add new Person
+  </a>
 
-<h3>Connect Friends</h3>
-<form method="post" action="/friends/connect">
-  <input type="text" name="name1" placeholder="Name">
-  <input type="text" name="name2" placeholder="Name">
-  <input type="submit" value="Submit">
-</form>
+  <a class="btn btn-primary" role="button" data-toggle="collapse" href="#addNewLocation" aria-expanded="false" aria-controls="addNewLocation">
+    Add new Location
+  </a>
+  <a class="btn btn-primary" role="button" data-toggle="collapse" href="#addBirthPlace" aria-expanded="false" aria-controls="addBirthPlace">
+    Connect Friends
+  </a>
+  <a class="btn btn-primary" role="button" data-toggle="collapse" href="#connectFriends" aria-expanded="false" aria-controls="connectFriends">
+      Add Birthplace
+  </a>
+  
+  <br><br>
+  <div class="collapse" id="addNewPerson">
+    <div class="well">
+      <h3>Add new Person</h3>
+      <form method="post" action="/person/add">
+        <input type="text" name="name" placeholder="Name">
+        <input type="submit" value="Submit" class="btn btn-default btn-sm">
+      </form>
+    </div>
+  </div>
+  
+  <div class="collapse" id="addNewLocation">
+    <div class="well">
+    <h3>Add new Location</h3>
+    <form method="post" action="/location/add">
+      <input type="text" name="city" placeholder="City">
+      <input type="text" name="state" placeholder="State">
+      <input type="submit" value="Submit" class="btn btn-default btn-sm">
+    </form>
+  </div>
+  </div>
+  
+  <div class="collapse" id="connectFriends">
+    <div class="well">
+      <h3>Connect Friends</h3>
+      <form method="post" action="/friends/connect">
+        <input type="text" name="name1" placeholder="Name">
+        <input type="text" name="name2" placeholder="Name">
+        <input type="submit" value="Submit" class="btn btn-default btn-sm">
+      </form>
+  </div>
+  </div>
 
-<h3>Add Birthplace</h3>
-<form method="post" action="/person/born/add">
-  <input type="text" name="name" placeholder="Name">
-  <input type="text" name="city" placeholder="City">
-  <input type="text" name="state" placeholder="State">
-  <input type="text" name="year" placeholder="Year">
-  <input type="submit" value="Submit">
-</form>
+  <div class="collapse" id="addBirthPlace">
+    <div class="well">
+        <h3>Add Birthplace</h3>
+        <form method="post" action="/person/born/add">
+          <input type="text" name="name" placeholder="Name">
+          <input type="text" name="city" placeholder="City">
+          <input type="text" name="state" placeholder="State">
+          <input type="text" name="year" placeholder="Year">
+          <input type="submit" value="Submit" class="btn btn-default btn-sm">
+        </form>
+  </div>
+  </div>
+  
+  <h3>People</h3>
+  
+  <div class="row">
+    <% persons.forEach(function(person) { %>
+      <div class="col-md-2"> 
+        <div class="well">
+          <i class="fa fa-user"></i> <a href="/person/<%= person.id %>"> <%= person.name %> </a>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+  <h3>Locations</h3>
+  
+  <div class="row">
+    <% locations.forEach(function(location) { %>
+      <div class="col-md-2"> 
+          <div class="well"><i class="fa fa-map-marker"></i>
+            <%= location.city%>, <%=location.state %>
+        </div>
+      </div>
+    <% }) %>
+    </div>
 
+<% include ../views/partials/footer %>
 
-<h3>People</h3>
-
-<ul>
-  <% persons.forEach(function(person) { %>
-    <li><a href="/person/<%= person.id %>"> <%= person.name %> </a></li>
-  <% }) %>
-</ul>
-<h3>Locations</h3>
-
-<ul>
-  <% locations.forEach(function(location) { %>
-    <li>
-      <%= location.city%>, <%=location.state %>
-    </li>
-  <% }) %>
-</ul>
