@@ -16,7 +16,8 @@
     "dotenv": "^8.2.0",
     "ejs": "^2.4.2",
     "express": "*",
-    "morgan": "*"
+    "morgan": "*",
+    "neo4j-driver": "^1.7.6"
   },
   "keywords": [],
   "author": "",
