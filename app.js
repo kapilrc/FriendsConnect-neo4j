@@ -129,6 +129,51 @@ app.post('/person/born/add', (req, res) => {
     })
 })
 
+// Person route
+app.get('/person/:id', (req, res) => {
+  var id = req.params.id;
+  console.log("id", id);
+  session
+    .run('MATCH (p:Person) WHERE id(p)=toInt({idParam}) RETURN p.name as name', {idParam: id})
+    .then(resp=> {
+      const name = resp.records[0].get("name");
+
+      session
+        .run('OPTIONAL MATCH (p:Person)-[:BORN_IN]->(l:Location) WHERE id(p)=toInt({idParam}) RETURN l.City as City, l.State as State', {idParam: id})
+        .then(resp => {
+          const city = resp.records[0].get("City");
+          const state = resp.records[0].get("State");
+
+          session
+            .run('OPTIONAL MATCH (a:Person)-[r:FRIENDS]-(b:Person) WHERE id(a)=toInt({idParam}) RETURN b', {idParam: id})
+            .then(resp => {
+              const FriendsArr = [];
+              resp.records.forEach(record => {
+                if(record._fields[0] != null){
+                  FriendsArr.push({
+                    id: record._fields[0].identity.low,
+                    name: record._fields[0].properties.name
+                  })
+                }
+              });
+
+              res.render('person', {
+                id,
+                name,
+                city,
+                state,
+                friends: FriendsArr
+              });
+              session.close();
+            })
+            .catch(err => {
+              console.log("Relationship error", err)
+            });
+        })
+        .catch()
+    })
+    .catch()
+})
 
 
 const port = process.env.PORT || 3000;
