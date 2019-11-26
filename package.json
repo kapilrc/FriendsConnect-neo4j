@@ -1,0 +1,28 @@
+{
+  "name": "FriendsConnect-neo4j",
+  "version": "1.0.0",
+  "description": "A demo to create, connect friends and save, retrive data from neo4j",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kapilrc/FriendsConnect-neo4j.git"
+  },
+  "dependencies": {
+    "body-parser": "*",
+    "cookie-parser": "*",
+    "dotenv": "^8.2.0",
+    "ejs": "^2.4.2",
+    "express": "*",
+    "morgan": "*"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kapilrc/FriendsConnect-neo4j/issues"
+  },
+  "homepage": "https://github.com/kapilrc/FriendsConnect-neo4j#readme"
+}
